@@ -11,29 +11,38 @@ External python modules:
  - BeautifulSoup
  - pdftotext
 
-# Optional parameters
+## Optional parameters in Exam class
 
-Parameter   Type                 Definition
-=========== ==================== ==========================================================================================
-code        str                  Subject code, if None a table with subject codes is shown
-path        str                  Root path to download/read PDFs
-url         str                  Root url where subjects and codes are shown
-force_dload bool                 True to force PDF downloads (by default PDFs are not downloaded if found locally)
+| Parameter | Type | Definition |
+| --- | --- | --- |
+| code | str | Subject code, if None a table with subject codes is shown |
+| path | str | Root path to download/read PDFs |
+| url | str | Root url where subjects and codes are shown |
+| force_dload | bool | True to force PDF downloads (by default PDFs are not downloaded if found locally) |
 
-# Python example, see oposGV.py
+## Python example
+
+```python
+# see oposGV.py file
 
 from drivers import Exam
 
-code = '207'  # physics and chemistry, use None to display available options
+# code = None   # use None to display available options
+code = '207'  # physics and chemistry
+# code = '216'  # music
+# code = '206'  # maths
+# code = '201'  # philosophy
 
 path = r'/home/cmesado/Documents/opos'
 url = r'https://ceice.gva.es/auto/Actas'
 force_dload = False
 
 exam = Exam(code=code, path=path, url=url, force_dload=force_dload)
+```
 
-# Output sample
+## Output sample
 
+```
 python3 oposGV.py
 
 Scanning root page...
@@ -81,3 +90,12 @@ PreExp: average points for previous experience as teacher for all students that 
 Studies: average points for background studies for all students that got a pass in part 2
 Other: average points for other achievements for all students that got a pass in part 2
 Total: average total points for all students that got a pass in part 2
+```
+
+## License
+
+This project includes MIT License. A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+
+## Contact
+
+Feel free to contact mesado31@gmail.com for any suggestion or bug.
