@@ -1,8 +1,6 @@
 # oposGV
 
-Get statistics for public exam of secondary teacher in Generalitat Valenciana (GVA, Spain) only
-
-Get statistics for public exam of secondary teacher in Generalitat Valenciana (GVA, Spain) only
+Get statistics for public exam of secondary teacher in *Generalitat Valenciana (GVA, Spain) only*
 PDFs in GVA page are download and precessed
 Choose a specific specialty and statistics are shown for each tribunal
 
@@ -37,7 +35,7 @@ path = r'/home/cmesado/Documents/opos'
 url = r'https://ceice.gva.es/auto/Actas'
 force_dload = False
 
-exam = Exam(code=code, path=path, url=url, force_dload=force_dload)
+Exam(code=code, path=path, url=url, force_dload=force_dload)
 ```
 
 ## Output sample
