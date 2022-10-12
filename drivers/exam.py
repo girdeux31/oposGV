@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 import drivers
-from auxiliar import error
+from auxiliar import error, point_keys
 
 
 class Exam:
@@ -34,6 +34,7 @@ class Exam:
         self.force_dload = force_dload
 
         self.subjects = list()
+        self.point_keys = point_keys
 
         for key in ['mark_theory', 'mark_practice', 'mark_teaching', 'mark_total', 'point_1', 'point_2', 'point_3', 'point_t']:
             setattr(self, key + '_avg', float())
@@ -62,7 +63,8 @@ class Exam:
                 subject = self.get_subject(self.code)
                 print('Subject with code {:s} is {:s}'.format(subject.code, subject.name))
             else:
-                error('Subject with code {:s} not found'.format(self.code))
+                self.show_subjects()
+                error('Subject with code {:s} not found in \'{:s}\', available codes are shown above'.format(self.code, self.url))
 
             print('Scanning subject page...')
             subject.scan_page()

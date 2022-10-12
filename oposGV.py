@@ -1,38 +1,90 @@
 
-# Visit GitHub page at https://github.com/girdeux31/oposGV
+# Program: oposGV
+# Version: 1.1
+# Author: Carles Mesado
+# Date: 12/10/2022
+
+# Visit GitHub page at https://github.com/girdeux31/oposGV for more info
+
+# Purpose:
+#
+# Get statistics for public exam of primary or secondary teaching in Generalitat Valenciana (GVA, Spain) only
+# PDFs in GVA page are download and precessed
+# Choose a specific specialty and statistics are shown for each tribunal
+
+# Requirements:
+#
+# Python 3.10 and the following third-party modules
+#
+#  - BeautifulSoup4=4.11.1
+#  - pdftotext==2.1.6   does not work with 2.2.x
+
+# Initial configuration:
+#
+# For Unix you may need to install this for pdftotext
+#
+#  sudo apt-get install build-essential libpoppler-cpp-dev pkg-config python3-dev
+#
+# Install modules with pip
+#
+#  pip install BeautifulSoup4==4.11.1 pdftotext==2.1.6
+
+# Examples:
+#
+# python3 oposGV.py     # show table with subject code info
+# python3 oposGV.py -h  # show help message
+# python3 oposGV.py -c 207 -p /home/$USER/Documents/opos  # show statistics for physics and chemistry and store pdfs in specified directory
+
+# Change log:
+#
+# v1.0 06/10/2021   Only for exams for secondary teaching
+# v1.1 12/10/2022   Extended for exams for primary teaching
+
+
+import sys
+import argparse
 
 from drivers import Exam
 
-# Get statistics for public exam of secondary teacher in Generalitat Valenciana (GVA, Spain) only
-# PDFs in GVA page are download and precessed
-# Choose a specific specialty and statistics are shown for each tribunal
-#
-# External python modules:
-#
-#  - BeautifulSoup
-#  - pdftotext
 
-code = None   # use None to display available options
-code = '207'  # physics and chemistry
-# code = '216'  # music
-# code = '206'  # maths
-# code = '201'  # philosophy
+parser = argparse.ArgumentParser(
+                prog='oposGV',
+                description='Get statistics for public exam of primary or secondary teaching in Generalitat Valenciana (GVA, Spain) only',
+                epilog='Visit GitHub page at https://github.com/girdeux31/oposGV for more information',
+                add_help=False
+        )
 
-path = r'/home/cmesado/Documents/opos'
-url = r'https://ceice.gva.es/auto/Actas'
-force_dload = False
+parser.add_argument('-h', '--help',
+                    action='store_true',
+                    default=False,
+                    help='Show this help message and exit, default is False'
+                )
+parser.add_argument('-c', '--code',
+                    default=None,
+                    metavar='CODE',
+                    help='Subject code, if None a table with subject codes is shown, default is None'
+                )
+parser.add_argument('-p', '--path',
+                    default='.',
+                    metavar='PATH',
+                    help='Root path to download/read PDFs, default is the calling directory'
+                )
+parser.add_argument('-u', '--url',
+                    default='https://ceice.gva.es/auto/Actas',
+                    metavar='URL',
+                    help='Root GVA url where subjects and codes are shown, default is \'https://ceice.gva.es/auto/Actas\''
+                )
+parser.add_argument('-f', '--force', 
+                    action='store_true',
+                    default=False,
+                    help='Force PDF downloads, by default PDFs are NOT downloaded if found locally, default is False'
+                )
 
-# Parameter   Type                 Definition
-# =========== ==================== ==========================================================================================
-# code        str                  Subject code, if None a table with subject codes is shown
-# path        str                  Root path to download/read PDFs
-# url         str                  Root url where subjects and codes are shown
-# force_dload bool                 True to force PDF downloads (by default PDFs are not downloaded if found locally)
+args = parser.parse_args()
+# print(args.__dict__)
 
-exam = Exam(code=code, path=path, url=url, force_dload=force_dload)
+if args.help:
+    parser.print_help()
+    sys.exit()
 
-# exam.get_subject(code).get_tribunal('A1').get_pdf('ActaNotes1Definitiva.pdf').to_txt()
-# print(exam.get_subject(code).get_tribunal('A1').get_pdf('ActaNotes1Definitiva.pdf').to_str())
-# print(exam.get_subject(code).get_tribunal('A1'))
-# print(exam.get_subject(code).get_tribunal('A1').students[0])
-# print(exam.get_subject(code))
+exam = Exam(code=args.code, path=args.path, url=args.url, force_dload=args.force)

@@ -1,7 +1,7 @@
 
 import re
 import drivers
-from auxiliar import error, python_version
+from auxiliar import error, python_version_le_34
 
 
 class Part2Parser:
@@ -27,7 +27,7 @@ class Part2Parser:
 
         for match in self.entry_pattern.finditer(text):
 
-            if python_version <= 3.4:
+            if python_version_le_34:
                 match = match.groupdict()
 
             # print(tribunal.name, '|', match['id'], '|', match['name'], '|', match['mark_teaching'], '|', match['mark_total'])

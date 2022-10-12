@@ -75,9 +75,10 @@ class Pdf:
          None
         """
         with open(self.file, 'rb') as f:
-            pdf = pdftotext.PDF(f)
+            pdf = pdftotext.PDF(f)  # pdftotext 2.2.x has undisered result
 
         # read all the text into one string
+        # '\n\n' to separate pages in text
         return "\n\n".join(pdf)
 
     def to_txt(self):
@@ -92,5 +93,5 @@ class Pdf:
         """
         text = self.to_str()
 
-        with open(self.file + '.txt', 'w') as f:
+        with open(self.file.replace('.pdf', '.txt'), 'w') as f:
             f.write('{:s}'.format(text))
