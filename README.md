@@ -1,48 +1,61 @@
-# oposGV
+ # oposGV
 
-Get statistics for public exam of secondary teacher in *Generalitat Valenciana (GVA, Spain) only*
-PDFs in GVA page are download and precessed
-Choose a specific specialty and statistics are shown for each tribunal
+```
+Program: oposGV
+Version: 1.1
+Author: Carles Mesado
+Date: 12/10/2022
+```
 
-External python modules:
+## Purpose
 
- - BeautifulSoup
- - pdftotext
+Get statistics for public exam of primary or secondary teaching in Generalitat Valenciana (GVA, Spain) only.
 
-## Optional parameters in Exam class
+PDFs in GVA page are download and precessed.
 
-| Parameter | Type | Definition |
+Choose a specific specialty and statistics are shown for each tribunal.
+
+## Requirements
+
+Python 3.10 and the following third-party modules:
+
+ - BeautifulSoup4==4.11.1
+ - pdftotext==2.1.6   does not work with 2.2.x
+
+## Initial configuration
+
+For Unix you may need to install the following packages for pdftotext:
+
+```sudo apt-get install build-essential libpoppler-cpp-dev pkg-config python3-dev```
+ 
+Install modules with pip:
+
+```pip install BeautifulSoup4==4.11.1 pdftotext==2.1.6```
+
+## Usage
+
+```usage: oposGV [-h] [-c CODE] [-p PATH] [-u URL] [-f]```
+
+| Flag | Default | Definition | 
 | --- | --- | --- |
-| code | str | Subject code, if None a table with subject codes is shown |
-| path | str | Root path to download/read PDFs |
-| url | str | Root url where subjects and codes are shown |
-| force_dload | bool | True to force PDF downloads (by default PDFs are not downloaded if found locally) |
+| -h, --help |  | Show this help message and exit |
+| -c, --code | None | Subject code, if None a table with subject codes is shown |
+| -p, --path | $PWD | Root path to download/read PDFs |
+| -u, --url | https://ceice.gva.es/auto/Actas | Root GVA url where subjects and codes are shown |
+| -f, --force |  | Force PDF downloads, by default PDFs are NOT downloaded if found locally |
 
-## Python example
+## Examples
 
-```python
-# see oposGV.py file
-
-from drivers import Exam
-
-# code = None   # use None to display available options
-code = '207'  # physics and chemistry
-# code = '216'  # music
-# code = '206'  # maths
-# code = '201'  # philosophy
-
-path = r'/home/cmesado/Documents/opos'
-url = r'https://ceice.gva.es/auto/Actas'
-force_dload = False
-
-Exam(code=code, path=path, url=url, force_dload=force_dload)
+```
+python3 oposGV.py     # show table with subject code info
+python3 oposGV.py -h  # show help message
+python3 oposGV.py -c 207 -p /home/$USER/Documents/opos  # show statistics for physics and chemistry and store pdfs in specified directory
 ```
 
 ## Output sample
 
 ```
 python3 oposGV.py
-
 Scanning root page...
 Subject with code 207 is FISICA I QUIMICA
 Scanning subject page...
@@ -90,10 +103,19 @@ Other: average points for other achievements for all students that got a pass in
 Total: average total points for all students that got a pass in part 2
 ```
 
+## Change log
+
+| Version | Date | Description |
+| --- | --- | --- |
+| 1.0 | 06/10/2021 | Only for exams for secondary teaching |
+| 1.1 | 12/10/2022 | Extended for exams for primary teaching |
+ 
 ## License
 
 This project includes MIT License. A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
 
 ## Contact
+
+Visit GitHub page at https://github.com/girdeux31/oposGV for more info.
 
 Feel free to contact mesado31@gmail.com for any suggestion or bug.
