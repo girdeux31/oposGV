@@ -1,11 +1,11 @@
 
 import re
-from auxiliar import error, python_version_le_34
+from auxiliar import error, python_version_le_34, point_keys
 
 
 class Part3Parser:
 
-    def __init__(self, tribunal):
+    def __init__(self):
         """
         PURPOSE:
 
@@ -13,18 +13,15 @@ class Part3Parser:
 
         MANDATORY ARGUMENTS:
 
-         Parameter   Type                 Definition
-         =========== ==================== ==========================================================================================
-         tribunal    Tribunal             Tribunal object
+         None
         """
-        self.entry_pattern = self._entry_pattern_primary() if tribunal.subject.exam.primary_exams else self._entry_pattern_secondary()
+        self.entry_pattern = self._entry_pattern_main()
 
-    def _entry_pattern_primary(self):
+    def _entry_pattern_main(self):
 
-        # pattern for pdf from exam for primary teaching only has up to 3.4 section
-        # plus change of page can be found in the middle of the entry
-        # that did not happened in pdf from exam for secondary teaching
-        # thus I decided to store only the following info, which is enough
+        # mark pattern depends on exam type (primary/secondary) and sometimes the year
+        # plus, in primary, change of page can be found in the middle of the entry
+        # thus, store only the following info, which is enough
 
         p = ('^NOM / NOMBRE (?P<name>[A-ZÑÇ, ]+) +PUNTUACIÓ TOTAL$\n'
             ' +(?P<point_t>\d+,\d+)$\n'
@@ -38,7 +35,7 @@ class Part3Parser:
 
         return re.compile(p, re.MULTILINE | re.ASCII)
 
-    def _entry_pattern_secondary(self):
+    def _entry_pattern_all(self):
 
         # pattern for pdf from exam for secondary teaching 
 
@@ -69,14 +66,14 @@ class Part3Parser:
 
             points = dict()
 
-            for key in tribunal.subject.exam.point_keys:
+            for key in point_keys:
                 points[key] = float(match[key].replace(',', '.')) if match[key] else None
 
             if tribunal.has_student(name, id):
 
                 student = tribunal.get_student(name, id)
 
-                for key in tribunal.subject.exam.point_keys:
+                for key in point_keys:
                     setattr(student, key, points[key])
 
             else:

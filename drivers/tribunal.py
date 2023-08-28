@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 import drivers
 import parsers
-from auxiliar import error
+from auxiliar import error, point_keys
 
 
 class Tribunal:
@@ -78,11 +78,11 @@ class Tribunal:
 
         self.path = os.path.join(self.subject.path, self.name)
 
+        self.pdf_part_1 = 'ActaNotes1Definitiva.pdf'
         self.pdf_part_2 = 'ActaFinalFaseOposicio.pdf'
         self.pdf_part_3 = 'ActaMeritsDefinitiva.pdf'
-        self.pdf_part_1 = 'ActaNotes1Definitiva.pdf'
 
-        for key in self.subject.exam.point_keys:
+        for key in point_keys:
             setattr(self, key + '_min', float())
             setattr(self, key + '_max', float())
             setattr(self, key + '_avg', float())
@@ -135,7 +135,7 @@ class Tribunal:
 
         output += '\n{:18s}  {:6s} {:6s} {:6s}\n'.format(' ', 'Min', 'Avg', 'Max')
 
-        for key in self.subject.exam.point_keys:
+        for key in point_keys:
 
             mark_min = getattr(self, key + '_min')
             mark_max = getattr(self, key + '_max')
@@ -375,7 +375,7 @@ class Tribunal:
 
          None
         """
-        parser = parsers.Part3Parser(self)
+        parser = parsers.Part3Parser()
 
         if self.has_pdf(self.pdf_part_3):
 
@@ -453,7 +453,7 @@ class Tribunal:
         """
         if len(self.students) > 0:
 
-            for key in self.subject.exam.point_keys:
+            for key in point_keys:
 
                 points = [getattr(student, key) if getattr(student, key) else 0.0
                           for student in self.students if student.passed_part_2]

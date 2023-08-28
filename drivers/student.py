@@ -1,6 +1,6 @@
 
 import drivers
-from auxiliar import error
+from auxiliar import error, point_keys
 
 
 class Student:
@@ -18,10 +18,6 @@ class Student:
          tribunal    Tribunal             Tribunal object
          name        str                  Student name
          id          str                  Student ID
-         mark_theory      float                Mark first exam part theory
-         mark_practice      float                Mark first exam part problems
-         mark_teaching      float                Mark second exam
-         mark_total      float                Total mark
         """
         self.name = name
         self.id = id
@@ -41,7 +37,7 @@ class Student:
         else:
             error(f'Cannot backreference object of type {type(tribunal).__name__}')
 
-        for key in self.tribunal.subject.exam.point_keys:
+        for key in point_keys:
             setattr(self, key, float())
 
     def __str__(self):
@@ -62,7 +58,7 @@ class Student:
             value = getattr(self, key)
             output += '{:s}: {:s}\n'.format(key, str(value))
 
-        for key in self.tribunal.subject.exam.point_keys:
+        for key in point_keys:
 
             value = getattr(self, key)
 

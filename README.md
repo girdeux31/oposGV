@@ -109,6 +109,7 @@ Total: average total points for all students that got a pass in part 2
 | --- | --- | --- |
 | 1.0 | 06/10/2021 | Only for exams for secondary teaching |
 | 1.1 | 12/10/2022 | Extended for exams for primary teaching |
+| 1.2 | 28/08/2023 | Make it independent of exam type (primary/secondary) |
  
 ## License
 

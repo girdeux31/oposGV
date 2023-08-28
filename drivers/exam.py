@@ -4,12 +4,12 @@ import requests
 from bs4 import BeautifulSoup
 
 import drivers
-from auxiliar import error, point_keys_1, point_keys_2
+from auxiliar import error, point_keys
 
 
 class Exam:
 
-    def __init__(self, code=None, typ='primary', path='.', url=r'https://ceice.gva.es/auto/Actas', force_dload=False):
+    def __init__(self, code=None, path='.', url=r'https://ceice.gva.es/auto/Actas', force_dload=False):
         """
         PURPOSE:
 
@@ -24,20 +24,16 @@ class Exam:
          Parameter   Type                 Default        Definition
          =========== ==================== ============== ===========================================================================
          code        str                  None           Subject code, if None a table with subject codes is shown
-         typ         str                  'primary'      Exam type, options are primary for primary exams or else for secondary exams, default is 'primary'
          path        str                  '.'            Root path to download/read PDFs
          url         str                  GVA url        Root url where subjects and codes are shown
          force_dload bool                 False          True to force PDF downloads (by default PDFs are not downloaded if found locally)
         """
         self.code = code
-        self.typ = typ
         self.path = path
         self.url = url
         self.force_dload = force_dload
 
         self.subjects = list()
-        self.primary_exams = True if self.typ == 'primary' else False
-        self.point_keys = point_keys_1 if self.primary_exams else point_keys_2
 
         for key in ['mark_theory', 'mark_practice', 'mark_teaching', 'mark_total', 'point_1', 'point_2', 'point_3', 'point_t']:
             setattr(self, key + '_avg', float())
@@ -45,9 +41,6 @@ class Exam:
         # checks
         if code and not isinstance(self.code, str):
             error('Parameter \'code\' must be str or None')
-
-        if not isinstance(self.typ, str):
-            error('Parameter \'typ\' must be str')
 
         if not isinstance(self.path, str):
             error('Parameter \'path\' must be str')
