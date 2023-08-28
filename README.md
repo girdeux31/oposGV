@@ -20,7 +20,7 @@ Choose a specific specialty and statistics are shown for each tribunal.
 Python 3.10 and the following third-party modules:
 
  - BeautifulSoup4==4.11.1
- - pdftotext==2.1.6   does not work with 2.2.x
+ - pdftotext==2.1.6, does not work with 2.2.x
 
 ## Initial configuration
 
