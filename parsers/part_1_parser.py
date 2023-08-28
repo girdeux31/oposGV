@@ -43,7 +43,7 @@ class Part1Parser:
             if tribunal.has_student(name, id):
 
                 student = tribunal.get_student(name, id)
-                error('Student {:s} with id {:s} is already in tribunal {:s}'.format(student.name, student.id, tribunal.name))
+                error(f'Student {student.name} with id {student.id} is already in tribunal {tribunal.name}')
 
             else:
 

@@ -30,7 +30,7 @@ class PDF:
             self.tribunal = tribunal
             self.tribunal.add_pdf(self)
         else:
-            error('Cannot backreference object of type {:s}'.format(type(tribunal).__name__))
+            error(f'Cannot backreference object of type {type(tribunal).__name__}')
 
         self.file = os.path.join(self.tribunal.path, self.name)
 
@@ -62,7 +62,7 @@ class PDF:
             open(self.file, 'wb').write(req.content)  # save file
 
         except:
-            error('Pdf cannot be downloaded {:s}'.format(self.link))
+            error(f'Pdf cannot be downloaded {self.link}')
 
     def to_str(self):
         """
@@ -94,4 +94,4 @@ class PDF:
         text = self.to_str()
 
         with open(self.file.replace('.pdf', '.txt'), 'w') as f:
-            f.write('{:s}'.format(text))
+            f.write(f'{text}')

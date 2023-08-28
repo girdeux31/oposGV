@@ -80,4 +80,4 @@ class Part3Parser:
                     setattr(student, key, points[key])
 
             else:
-                error('Student {:s} with id {:s} is not found in tribunal {:s}'.format(name, id, tribunal.name))
+                error(f'Student {name} with id {id} is not found in tribunal {tribunal.name}')

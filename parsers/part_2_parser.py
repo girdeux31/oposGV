@@ -44,4 +44,4 @@ class Part2Parser:
                 student.mark_total_part_2 = mark_total
                 student.passed_part_2 = True
             else:
-                error('Student {:s} with id {:s} is not found in tribunal {:s}'.format(name, id, tribunal.name))
+                error(f'Student {name} with id {id} is not found in tribunal {tribunal.name}')

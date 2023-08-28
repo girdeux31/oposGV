@@ -74,7 +74,7 @@ class Tribunal:
             self.subject = subject
             self.subject.add_tribunal(self)
         else:
-            error('Cannot backreference object of type {:s}'.format(type(subject).__name__))
+            error(f'Cannot backreference object of type {type(subject).__name__}')
 
         self.path = os.path.join(self.subject.path, self.name)
 
@@ -97,7 +97,7 @@ class Tribunal:
 
          None
         """
-        output = 'Name: {:s}\n'.format(self.name)
+        output = f'Name: {self.name}\n'
 
         output += '\nPART 1\n'
         output += 'Students: {:d}\n'.format(self.students_part_1)
@@ -242,7 +242,7 @@ class Tribunal:
                     return student
 
         else:
-            error('Student {:s} with id {:s} is not found in tribunal {:s}'.format(name, id, self.name))
+            error(f'Student {name} with id {id} is not found in tribunal {self.name}')
 
     def add_student(self, student):
         """
@@ -261,7 +261,7 @@ class Tribunal:
             if student not in self.students:
                 self.students.append(student)
             else:
-                error('Student {:s} with id {:s} is already in tribunal {:s}'.format(student.name, student.id, self.name))
+                error(f'Student {student.name} with id {student.id} is already in tribunal {self.name}')
 
         else:
             error(f'Cannot add student of type {type(student).__name__}')
@@ -340,7 +340,7 @@ class Tribunal:
             parser.put_data_onto_tribunal(text, self)
 
         else:
-            error('Pdf {:s} not found in tribunal {:s}'.format(self.pdf_part_1, self.name))
+            error(f'PDF {self.pdf_part_1} not found in tribunal {self.name}')
 
     def parse_part_2(self):
         """
@@ -361,7 +361,7 @@ class Tribunal:
             parser.put_data_onto_tribunal(text, self)
 
         else:
-            error('Pdf {:s} not found in tribunal {:s}'.format(self.pdf_part_2, self.name))
+            error(f'PDF {self.pdf_part_2} not found in tribunal {self.name}')
 
     def parse_part_3(self):
         """
@@ -382,7 +382,7 @@ class Tribunal:
             parser.put_data_onto_tribunal(text, self)
 
         else:
-            error('Pdf {:s} not found in tribunal {:s}'.format(self.pdf_part_3, self.name))
+            error(f'PDF {self.pdf_part_3} not found in tribunal {self.name}')
 
     def calculate_average_part_1(self):
         """

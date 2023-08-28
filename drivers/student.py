@@ -39,7 +39,7 @@ class Student:
             self.tribunal = tribunal
             self.tribunal.add_student(self)
         else:
-            error('Cannot backreference object of type {:s}'.format(type(tribunal).__name__))
+            error(f'Cannot backreference object of type {type(tribunal).__name__}')
 
         for key in self.tribunal.subject.exam.point_keys:
             setattr(self, key, float())

@@ -74,7 +74,7 @@ class Subject:
             self.exam = exam
             self.exam.add_subject(self)
         else:
-            error('Cannot backreference object of type {:s}'.format(type(exam).__name__))
+            error(f'Cannot backreference object of type {type(exam).__name__}')
 
         self.path = os.path.join(self.exam.path, self.code + '_' + self.name.replace(' ', '_').lower())
 
@@ -202,7 +202,7 @@ class Subject:
 
             else:
                 print('Probably data is not download already, please use argument \'download=True\'')
-                error('Directory {:s} not found'.format(tribunal.path))
+                error(f'Directory {tribunal.path} not found')
 
         self.calculate_average_part_1()
         self.calculate_average_part_2()
@@ -360,7 +360,7 @@ class Subject:
             if self.has_tribunal(tribunal.name):
                 self.tribunals = [child for child in self.tribunals if child is not tribunal]
             else:
-                error('Tribunal {:s} does not exist'.format(tribunal.name))
+                error(f'Tribunal {tribunal.name} does not exist')
 
         else:
-            error('Cannot remove object of type ' + type(tribunal).__name__)
+            error(f'Cannot remove object of type ' + type(tribunal).__name__)
