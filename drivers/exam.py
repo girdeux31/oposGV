@@ -1,5 +1,5 @@
-
 import os
+import sys
 import requests
 from bs4 import BeautifulSoup
 
@@ -31,12 +31,12 @@ class Exam:
         """
         self.code = code
         self.typ = typ
-        self.primary_exams = True if typ == 'primary' else False
         self.path = path
         self.url = url
         self.force_dload = force_dload
 
         self.subjects = list()
+        self.primary_exams = True if self.typ == 'primary' else False
         self.point_keys = point_keys_1 if self.primary_exams else point_keys_2
 
         for key in ['mark_theory', 'mark_practice', 'mark_teaching', 'mark_total', 'point_1', 'point_2', 'point_3', 'point_t']:
@@ -45,6 +45,9 @@ class Exam:
         # checks
         if code and not isinstance(self.code, str):
             error('Parameter \'code\' must be str or None')
+
+        if not isinstance(self.typ, str):
+            error('Parameter \'typ\' must be str')
 
         if not isinstance(self.path, str):
             error('Parameter \'path\' must be str')
@@ -64,10 +67,10 @@ class Exam:
 
             if self.has_subject(self.code):
                 subject = self.get_subject(self.code)
-                print('Subject with code {:s} is {:s}'.format(subject.code, subject.name))
+                print(f'Subject with code {subject.code} is {subject.name}')
             else:
                 self.show_subjects()
-                error('Subject with code {:s} not found in \'{:s}\', available codes are shown above'.format(self.code, self.url))
+                error(f'Subject with code {self.code} not found in \'{self.url}\', available codes are shown above')
 
             print('Scanning subject page...')
             subject.scan_page()
@@ -82,6 +85,7 @@ class Exam:
         else:
 
             self.show_subjects()
+            sys.exit()
 
     def __str__(self):
         """
@@ -95,7 +99,7 @@ class Exam:
         """
         output = ' {:4s} {:50s}\n'.format('Code', 'Subject')
 
-        for subject in self.subjects:
+        for subject in sorted(self.subjects, key=lambda x: x.code):
 
             output += ' {:4s} {:50s}\n'.format(subject.code, subject.name)
 
