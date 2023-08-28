@@ -76,7 +76,7 @@ class Subject:
         else:
             error('Cannot backreference object of type {:s}'.format(type(exam).__name__))
 
-        self.path = os.path.join(self.exam.path, self.name.replace(' ', '_').lower())
+        self.path = os.path.join(self.exam.path, self.code + '_' + self.name.replace(' ', '_').lower())
 
     def __str__(self):
         """
