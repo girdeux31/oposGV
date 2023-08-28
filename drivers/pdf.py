@@ -7,7 +7,7 @@ import drivers
 from auxiliar import error
 
 
-class Pdf:
+class PDF:
 
     def __init__(self, tribunal, name, link):
         """

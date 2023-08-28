@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 import drivers
 import parsers
-from auxiliar import error, point_keys
+from auxiliar import error
 
 
 class Tribunal:
@@ -82,7 +82,7 @@ class Tribunal:
         self.pdf_part_3 = 'ActaMeritsDefinitiva.pdf'
         self.pdf_part_1 = 'ActaNotes1Definitiva.pdf'
 
-        for key in point_keys:
+        for key in self.subject.exam.point_keys:
             setattr(self, key + '_min', float())
             setattr(self, key + '_max', float())
             setattr(self, key + '_avg', float())
@@ -135,7 +135,7 @@ class Tribunal:
 
         output += '\n{:18s}  {:6s} {:6s} {:6s}\n'.format(' ', 'Min', 'Avg', 'Max')
 
-        for key in point_keys:
+        for key in self.subject.exam.point_keys:
 
             mark_min = getattr(self, key + '_min')
             mark_max = getattr(self, key + '_max')
@@ -179,7 +179,7 @@ class Tribunal:
                 link = os.path.join(self.link, link_obj.get('href').replace('./', '')).strip()
                 name = link_obj.contents[0].strip()
 
-                drivers.Pdf(self, name, link)
+                drivers.PDF(self, name, link)
 
     def download(self):
         """
@@ -311,7 +311,7 @@ class Tribunal:
          =========== ==================== ==========================================================================================
          name        str                  Pdf name
         """
-        if isinstance(pdf, drivers.Pdf):
+        if isinstance(pdf, drivers.PDF):
 
             if pdf not in self.pdfs:
                 self.pdfs.append(pdf)
@@ -373,7 +373,7 @@ class Tribunal:
 
          None
         """
-        parser = parsers.Part3Parser()
+        parser = parsers.Part3Parser(self)
 
         if self.has_pdf(self.pdf_part_3):
 
@@ -451,7 +451,7 @@ class Tribunal:
         """
         if len(self.students) > 0:
 
-            for key in point_keys:
+            for key in self.subject.exam.point_keys:
 
                 points = [getattr(student, key) if getattr(student, key) else 0.0
                           for student in self.students if student.passed_part_2]

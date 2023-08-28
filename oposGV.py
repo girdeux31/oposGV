@@ -35,6 +35,7 @@
 #
 #  -h, --help            Show this help message and exit, default is False
 #  -c CODE, --code CODE  Subject code, if None a table with subject codes is shown, default is None
+#  -t TYPE, --type TYPE  Exam type, options are primary for primary exams or else for secondary exams, default is 'primary'
 #  -p PATH, --path PATH  Root path to download/read PDFs, default is the calling directory
 #  -u URL, --url URL     Root GVA url where subjects and codes are shown, default is 'https://ceice.gva.es/auto/Actas'
 #  -f, --force           Force PDF downloads, by default PDFs are NOT downloaded if found locally, default is False
@@ -49,6 +50,11 @@
 #
 # v1.0 06/10/2021   Only for exams for secondary teaching
 # v1.1 12/10/2022   Extended for exams for primary teaching
+# v1.2 28/08/2023   Add parameter for primary/secondary exams
+
+# Main structure:
+#
+# Exam / Subject / Tribunal / Pdf or Student
 
 
 import sys
@@ -74,6 +80,11 @@ parser.add_argument('-c', '--code',
                     metavar='CODE',
                     help='Subject code, if None a table with subject codes is shown, default is None'
                 )
+parser.add_argument('-t', '--type',
+                    default='primary',
+                    metavar='TYPE',
+                    help='Exam type, options are primary for primary exams or else for secondary exams, default is \'primary\''
+                )
 parser.add_argument('-p', '--path',
                     default='.',
                     metavar='PATH',
@@ -97,4 +108,4 @@ if args.help:
     parser.print_help()
     sys.exit()
 
-exam = Exam(code=args.code, path=args.path, url=args.url, force_dload=args.force)
+exam = Exam(code=args.code, typ=args.type, path=args.path, url=args.url, force_dload=args.force)

@@ -3,15 +3,15 @@ import sys
 import os
 from inspect import stack
 
-# for pattern for pdfs from exam for secondary teaching
-# point_keys = ['point_t', 'point_1', 'point_2', 'point_3', 'p11', 'p11a', 'p11b', 'p12', 'p12a', 'p12b', 'p21', 'p22',
-#               'p221', 'p222', 'p223', 'p23', 'p231', 'p232', 'p24', 'p241', 'p242', 'p243', 'p244', 'p245', 'p31',
-#               'p32', 'p321', 'p3211', 'p3212', 'p322', 'p3221', 'p3222', 'p323', 'p33', 'p331', 'p332', 'p333', 'p334',
-#               'p335', 'p336', 'p34', 'p341', 'p342', 'p343', 'p344', 'p345', 'p346', 'p347', 'p348', 'p349', 'p3410',
-#               'p3411', 'p3412', 'p35']
-
 # for pattern for pdfs from exam for primary teaching
-point_keys = ['point_t', 'point_1', 'point_2', 'point_3']
+point_keys_1 = ['point_t', 'point_1', 'point_2', 'point_3']
+
+# for pattern for pdfs from exam for secondary teaching
+point_keys_2 = ['point_t', 'point_1', 'point_2', 'point_3', 'p11', 'p11a', 'p11b', 'p12', 'p12a', 'p12b', 'p21', 'p22',
+                'p221', 'p222', 'p223', 'p23', 'p231', 'p232', 'p24', 'p241', 'p242', 'p243', 'p244', 'p245', 'p31',
+                'p32', 'p321', 'p3211', 'p3212', 'p322', 'p3221', 'p3222', 'p323', 'p33', 'p331', 'p332', 'p333', 'p334',
+                'p335', 'p336', 'p34', 'p341', 'p342', 'p343', 'p344', 'p345', 'p346', 'p347', 'p348', 'p349', 'p3410',
+                'p3411', 'p3412', 'p35']
 
 python_version_le_34 = False if sys.version_info[0] >= 3 and sys.version_info[1] > 4 else True
 
