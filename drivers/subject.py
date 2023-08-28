@@ -243,7 +243,9 @@ class Subject:
         for key in ['mark_teaching', 'mark_total_part_2']:
 
             # sum over students and not over tribunals since tribunals have different number of students
-            marks_passed = [getattr(student, key) for tribunal in self.tribunals for student in tribunal.students if student.passed_part_2]
+            marks_passed = [getattr(student, key) for tribunal in self.tribunals 
+                                                    for student in tribunal.students 
+                                                    if student.passed_part_2 and getattr(student, key)]
 
             mark_avg_passed = sum(marks_passed) / len(marks_passed) if len(marks_passed) > 0 else 0.0
 

@@ -156,7 +156,9 @@ class Tribunal:
 
          None
         """
-        return all([self.has_pdf(self.pdf_part_2), self.has_pdf(self.pdf_part_1), self.has_pdf(self.pdf_part_3)])
+        return all([self.has_pdf(self.pdf_part_1), 
+                    self.has_pdf(self.pdf_part_2), 
+                    self.has_pdf(self.pdf_part_3)])
 
     def scan_page(self):
         """
@@ -429,7 +431,7 @@ class Tribunal:
             for key in ['mark_teaching', 'mark_total_part_2']:
 
                 marks_passed = [getattr(student, key) for student in self.students
-                                if student.passed_part_2]   # marks for all passed students
+                                                        if student.passed_part_2 and getattr(student, key)]   # marks for all passed students
 
                 mark_min = min(marks_passed) if len(marks_passed) > 0 else 0.0
                 mark_max = max(marks_passed) if len(marks_passed) > 0 else 0.0

@@ -20,7 +20,7 @@ class Part2Parser:
 
     def _entry_pattern(self):
 
-        p = '^ *\*+(?P<id>\d\d\d\d)\*+ +(?P<name>[A-ZÁÀÉÈÍÌÏÓÒÚÙÜÑÇ, ]+) +(?P<mark_theory>\d+,\d+) +(?P<mark_practice>\d+,\d+) +(?P<mark_teaching>\d+,\d+) +(?P<mark_total>\d+,\d+).*$'
+        p = '^ *\*+(?P<id>\d\d\d\d)\*+ +(?P<name>[A-ZÁÀÉÈÍÌÏÓÒÚÙÜÑÇ, ]+) +(?P<mark_theory>\d+,\d+) +(?P<mark_practice>\d+,\d+) +(?P<mark_teaching>[0-9,-]) +(?P<mark_total>\d+,\d+).*$'
         return re.compile(p, re.MULTILINE | re.ASCII)
 
     def put_data_onto_tribunal(self, text, tribunal):
@@ -30,12 +30,11 @@ class Part2Parser:
             if python_version_le_34:
                 match = match.groupdict()
 
-            # print(tribunal.name, '|', match['id'], '|', match['name'], '|', match['mark_teaching'], '|', match['mark_total'])
-
             name = match['name'].strip()
             id = match['id'].replace('*', '')
 
-            mark_teaching = float(match['mark_teaching'].replace(',', '.'))
+            # part 2 (teaching) not performed in 2023 and filled with '-'
+            mark_teaching = None if match['mark_teaching'] == '-' else float(match['mark_teaching'].replace(',', '.'))
             mark_total = float(match['mark_total'].replace(',', '.'))
 
             if tribunal.has_student(name, id):
