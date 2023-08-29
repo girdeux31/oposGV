@@ -1,8 +1,7 @@
-
 import re
 
-import drivers
-from auxiliar import error, python_version_le_34
+from drivers.student import Student
+from utils import error, python_version_le_34
 
 
 class Part1Parser:
@@ -47,7 +46,7 @@ class Part1Parser:
 
             else:
 
-                student = drivers.Student(tribunal, name, id)
+                student = Student(tribunal, name, id)
 
                 student.mark_theory = mark_theory
                 student.mark_practice = mark_practice

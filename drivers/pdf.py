@@ -1,10 +1,8 @@
-
 import os
 import requests
 import pdftotext
 
-import drivers
-from auxiliar import error
+from utils import error
 
 
 class PDF:
@@ -26,7 +24,7 @@ class PDF:
         self.name = name
         self.link = link
 
-        if isinstance(tribunal, drivers.Tribunal):
+        if type(tribunal).__name__ == 'Tribunal':
             self.tribunal = tribunal
             self.tribunal.add_pdf(self)
         else:

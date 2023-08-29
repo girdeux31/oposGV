@@ -1,6 +1,4 @@
-
-import drivers
-from auxiliar import error, point_keys
+from utils import error, point_keys
 
 
 class Student:
@@ -31,7 +29,7 @@ class Student:
         self.passed_part_2 = False
         # it is not possible to know absents in part 2, we know passed but not sure if others failed or are absent
 
-        if isinstance(tribunal, drivers.Tribunal):
+        if type(tribunal).__name__ == 'Tribunal':
             self.tribunal = tribunal
             self.tribunal.add_student(self)
         else:

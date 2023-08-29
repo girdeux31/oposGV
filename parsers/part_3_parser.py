@@ -1,6 +1,6 @@
-
 import re
-from auxiliar import error, python_version_le_34, point_keys
+
+from utils import error, python_version_le_34, point_keys
 
 
 class Part3Parser:

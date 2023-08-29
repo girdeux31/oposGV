@@ -59,7 +59,7 @@
 import sys
 import argparse
 
-from drivers import Exam
+from drivers.exam import Exam
 
 
 parser = argparse.ArgumentParser(

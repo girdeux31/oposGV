@@ -1,34 +1,19 @@
 import sys
 
-sys.path.append(r'/home/cmesado/Dropbox/dev')
+sys.path.append(r'/home/cmesado/Dropbox/dev/oposGV')
 
-from oposGV.drivers.exam import Exam
+from drivers.exam import Exam
 
-code = '201'  # philosophy
+code = '264'
 path = r'tests/ref'
 url = r'https://ceice.gva.es/auto/Actas'
-force_dload = False
-tribunal = 'A1'
+tribunal = 'V1'
 
-def test_defaults():
+def test_exam():
 
-    exam = Exam()
+    exam = Exam(code=code, path=path, url=url, force_dload=False, is_test=True)
+
     assert exam
-
-def test_show_info():
-
-    exam = Exam(code=code)
-    assert exam
-
-def test_defined():
-
-    exam = Exam(code=code, path=path, url=url, force_dload=force_dload)
-    assert exam
-
-    # Some tests for developer
-
-    # exam.get_subject(code).get_tribunal(tribunal).get_pdf('ActaNotes1Definitiva.pdf').to_txt()
-    # print(exam.get_subject(code).get_tribunal(tribunal).get_pdf('ActaNotes1Definitiva.pdf').to_str())
-    # print(exam.get_subject(code).get_tribunal(tribunal))
-    # print(exam.get_subject(code).get_tribunal(tribunal).students[0])
-    # print(exam.get_subject(code))
+    assert str(exam)
+    assert exam.has_subject(code)
+    assert not exam.has_subject('999')

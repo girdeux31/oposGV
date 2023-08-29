@@ -1,11 +1,12 @@
-
 import os
 import requests
 from bs4 import BeautifulSoup
 
-import drivers
-import parsers
-from auxiliar import error, point_keys
+from drivers.pdf import PDF
+from parsers.part_1_parser import Part1Parser
+from parsers.part_2_parser import Part2Parser
+from parsers.part_3_parser import Part3Parser
+from utils import error, point_keys
 
 
 class Tribunal:
@@ -70,7 +71,7 @@ class Tribunal:
         self.pdfs = list()
         self.students = list()
 
-        if isinstance(subject, drivers.Subject):
+        if type(subject).__name__ == 'Subject':
             self.subject = subject
             self.subject.add_tribunal(self)
         else:
@@ -181,7 +182,7 @@ class Tribunal:
                 link = os.path.join(self.link, link_obj.get('href').replace('./', '')).strip()
                 name = link_obj.contents[0].strip()
 
-                drivers.PDF(self, name, link)
+                PDF(self, name, link)
 
     def download(self):
         """
@@ -258,7 +259,7 @@ class Tribunal:
          =========== ==================== ==========================================================================================
          student     Student              Student object
         """
-        if isinstance(student, drivers.Student):
+        if type(student).__name__ == 'Student':
 
             if student not in self.students:
                 self.students.append(student)
@@ -313,7 +314,7 @@ class Tribunal:
          =========== ==================== ==========================================================================================
          name        str                  Pdf name
         """
-        if isinstance(pdf, drivers.PDF):
+        if type(pdf).__name__ == 'PDF':
 
             if pdf not in self.pdfs:
                 self.pdfs.append(pdf)
@@ -333,7 +334,7 @@ class Tribunal:
 
          None
         """
-        parser = parsers.Part1Parser()
+        parser = Part1Parser()
 
         if self.has_pdf(self.pdf_part_1):
 
@@ -354,7 +355,7 @@ class Tribunal:
 
          None
         """
-        parser = parsers.Part2Parser()
+        parser = Part2Parser()
 
         if self.has_pdf(self.pdf_part_2):
 
@@ -375,7 +376,7 @@ class Tribunal:
 
          None
         """
-        parser = parsers.Part3Parser()
+        parser = Part3Parser()
 
         if self.has_pdf(self.pdf_part_3):
 

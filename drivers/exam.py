@@ -3,13 +3,13 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 
-import drivers
-from auxiliar import error, point_keys
+from drivers.subject import Subject
+from utils import error, point_keys
 
 
 class Exam:
 
-    def __init__(self, code=None, path='.', url=r'https://ceice.gva.es/auto/Actas', force_dload=False):
+    def __init__(self, code=None, path='.', url=r'https://ceice.gva.es/auto/Actas', force_dload=False, is_test=False):
         """
         PURPOSE:
 
@@ -27,11 +27,13 @@ class Exam:
          path        str                  '.'            Root path to download/read PDFs
          url         str                  GVA url        Root url where subjects and codes are shown
          force_dload bool                 False          True to force PDF downloads (by default PDFs are not downloaded if found locally)
+         is_test     bool                 False          Prevent downloads, only for developers
         """
         self.code = code
         self.path = path
         self.url = url
         self.force_dload = force_dload
+        self.is_test = is_test
 
         self.subjects = list()
 
@@ -51,6 +53,9 @@ class Exam:
         if not isinstance(self.force_dload, bool):
             error('Parameter \'force_dload\' must be bool')
 
+        if not isinstance(self.is_test, bool):
+            error('Parameter \'is_test\' must be bool')
+
         # call methods
 
         print('Scanning root page...')
@@ -68,8 +73,9 @@ class Exam:
             print('Scanning subject page...')
             subject.scan_page()
 
-            print('Downloading data if needed, please wait...')
-            subject.download()
+            if not self.is_test:
+                print('Downloading data if needed, please wait...')
+                subject.download()
 
             print('Processing data...')
             subject.process_data()
@@ -120,7 +126,7 @@ class Exam:
                 code = link_obj.contents[0].split('_')[0].strip()
                 name = link_obj.contents[0].split('_')[1].replace('/', '').strip()
 
-                drivers.Subject(self, code, name, link)
+                Subject(self, code, name, link)
 
     def show_subjects(self):
         """
@@ -179,7 +185,7 @@ class Exam:
          =========== ==================== ==========================================================================================
          code        str                  Subject code
         """
-        if isinstance(subject, drivers.Subject):
+        if type(subject).__name__ == 'Subject':
 
             if subject not in self.subjects:
                 self.subjects.append(subject)

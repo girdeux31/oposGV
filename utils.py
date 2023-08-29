@@ -1,6 +1,6 @@
-
-import sys
 import os
+import sys
+import math
 from inspect import stack
 
 # part 3 main mark attributes
@@ -106,3 +106,11 @@ def warning(msg, id=None):
 
     print(msg)
     print('')
+
+def compare_floats(float_test, float_ref, decimals=4):
+    
+    power = round(math.log10(abs(float_ref))) if float_ref != 0.0 else 0.0
+    power = power - decimals
+    eps = 10**(power)
+
+    return True if float_test - eps <= float_ref <= float_test + eps else False

@@ -1,10 +1,9 @@
-
 import os
 import requests
 from bs4 import BeautifulSoup
 
-import drivers
-from auxiliar import error
+from drivers.tribunal import Tribunal
+from utils import error
 
 
 class Subject:
@@ -70,7 +69,7 @@ class Subject:
 
         self.tribunals = list()
 
-        if isinstance(exam, drivers.Exam):
+        if type(exam).__name__ == 'Exam':
             self.exam = exam
             self.exam.add_subject(self)
         else:
@@ -178,7 +177,7 @@ class Subject:
                 link = os.path.join(self.link, link_obj.get('href').replace('./', '')).strip()
                 name = link_obj.contents[0].split('-')[-1].replace('/', '').strip()
 
-                tribunal = drivers.Tribunal(self, name, link)
+                tribunal = Tribunal(self, name, link)
                 tribunal.scan_page()
 
     def process_data(self):
@@ -344,7 +343,7 @@ class Subject:
          =========== ==================== ==========================================================================================
          name        str                  Tribunal name
         """
-        if isinstance(tribunal, drivers.Tribunal):
+        if isinstance(tribunal, Tribunal):
 
             if tribunal not in self.tribunals:
                 self.tribunals.append(tribunal)
@@ -366,7 +365,7 @@ class Subject:
          =========== ==================== ==========================================================================================
          tribunal    Tribunal             Object to remove
         """
-        if isinstance(tribunal, drivers.Tribunal):
+        if isinstance(tribunal, Tribunal):
 
             if self.has_tribunal(tribunal.name):
                 self.tribunals = [child for child in self.tribunals if child is not tribunal]
