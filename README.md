@@ -2,11 +2,11 @@
 
 ## Characteristics
 
-Program: oposGV
-Version: 1.2
-Author: Carles Mesado
-Date: 29/08/2023
-Size: ~ 400 KiB
+ - Program: oposGV
+ - Version: 1.2
+ - Author: Carles Mesado
+ - Date: 29/08/2023
+ - Size: ~ 400 KiB
 
 ## Purpose
 
