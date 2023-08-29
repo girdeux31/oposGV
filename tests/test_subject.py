@@ -5,10 +5,9 @@ sys.path.append(r'/home/cmesado/Dropbox/dev/oposGV')
 from drivers.exam import Exam
 from utils import compare_floats
 
-code = '264'
+code = '224'
 path = r'tests/ref'
 url = r'https://ceice.gva.es/auto/Actas'
-tribunal = 'V1'
 
 def test_subject():
 
@@ -16,16 +15,17 @@ def test_subject():
     subject = exam.get_subject(code)
 
     assert subject.has_tribunal('V1')
+    assert subject.has_tribunal('V2')
     assert not subject.has_tribunal('fake')
     
-    assert subject.students_part_1 == 5
-    assert subject.students_part_2 == 4
+    assert subject.students_part_1 == 10
+    assert subject.students_part_2 == 8
 
-    assert subject.passed_absolute_part_1 == 4
+    assert subject.passed_absolute_part_1 == 8
     assert subject.passed_relative_part_1 == 80.0
-    assert subject.absent_absolute_part_1 == 1
+    assert subject.absent_absolute_part_1 == 2
     assert subject.absent_relative_part_1 == 20.0
-    assert subject.passed_absolute_part_2 == 3
+    assert subject.passed_absolute_part_2 == 6
     assert subject.passed_relative_part_2 == 60.0
     
     assert compare_floats(subject.mark_theory_avg_all, 5.1850)
@@ -44,7 +44,3 @@ def test_subject():
     assert compare_floats(subject.point_2_avg, 0.5)
     assert compare_floats(subject.point_3_avg, 1.0)
     assert compare_floats(subject.point_t_avg, 4.0081)
-    
-    
-    
-
