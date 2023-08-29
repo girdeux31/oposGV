@@ -34,7 +34,7 @@ class Part2Parser:
 
             # part 2 (teaching) not performed in 2023 and filled with '-'
             mark_teaching = None if match['mark_teaching'] == '-' else float(match['mark_teaching'].replace(',', '.'))
-            mark_total = float(match['mark_total'].replace(',', '.'))
+            mark_total = None if match['mark_total'] == '-' else float(match['mark_total'].replace(',', '.'))
 
             if tribunal.has_student(name, id):
                 student = tribunal.get_student(name, id)

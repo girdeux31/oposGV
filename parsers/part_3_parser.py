@@ -22,15 +22,16 @@ class Part3Parser:
         # mark pattern depends on exam type (primary/secondary) and sometimes the year
         # plus, in primary, change of page can be found in the middle of the entry
         # thus, store only the following info, which is enough
+        # TODO non gready
 
-        p = ('^NOM / NOMBRE (?P<name>[A-ZÑÇ, ]+) +PUNTUACIÓ TOTAL$\n'
+        p = ('^ (?P<name>[A-ZÑÇ, ]+) +PUNTUACIÓ TOTAL$\n'
             ' +(?P<point_t>\d+,\d+)$\n'
             'DNI *\*+(?P<id>\d\d\d\d)\*+ +PUNTUACIÓN TOTAL$\n'
-            '(.+$\n)+'
+            '(.*$\n)+'
             ' +TOTAL [0-9I.]+ *(?P<point_1>\d+,\d+)?$\n'
-            '(.+$\n)+'
+            '(.*$\n)+'
             ' +TOTAL [0-9I.]+ *(?P<point_2>\d+,\d+)?$\n'
-            '(.+$\n)+'
+            '(.*$\n)+'
             ' +TOTAL [0-9I.]+ *(?P<point_3>\d+,\d+)?$\n')
 
         return re.compile(p, re.MULTILINE | re.ASCII)
@@ -39,7 +40,7 @@ class Part3Parser:
 
         # pattern for pdf from exam for secondary teaching 
 
-        p = ('^NOM / NOMBRE (?P<name>[A-ZÑÇ, ]+) +PUNTUACIÓ TOTAL$\n'
+        p = ('^ (?P<name>[A-ZÑÇ, ]+) +PUNTUACIÓ TOTAL$\n'
             ' +(?P<point_t>\d+,\d+)$\n'
             'DNI *\*+(?P<id>\d\d\d\d)\*+ +PUNTUACIÓN TOTAL$\n'
             ' +1\.1 +(?P<p11>\d+,\d+)? +1\.1\.a +(?P<p11a>\d+,\d+)? +1\.1\.b +(?P<p11b>\d+,\d+)? +1\.2 +(?P<p12>\d+,\d+)? +1\.2\.a +(?P<p12a>\d+,\d+)? +1\.2\.b *(?P<p12b>\d+,\d+)?$\n'
@@ -55,26 +56,32 @@ class Part3Parser:
         return re.compile(p, re.MULTILINE | re.ASCII)
 
     def put_data_onto_tribunal(self, text, tribunal):
+        
+        texts = text.split('NOM / NOMBRE')
 
-        for match in self.entry_pattern.finditer(text):
+        for txt in texts:
+            
+            match = self.entry_pattern.search(txt)
 
-            if python_version_le_34:
-                match = match.groupdict()
+            if match:
 
-            name = match['name'].strip()
-            id = match['id'].replace('*', '')
+                if python_version_le_34:
+                    match = match.groupdict()
 
-            points = dict()
+                name = match['name'].strip()
+                id = match['id'].replace('*', '')
 
-            for key in point_keys:
-                points[key] = float(match[key].replace(',', '.')) if match[key] else None
-
-            if tribunal.has_student(name, id):
-
-                student = tribunal.get_student(name, id)
+                points = dict()
 
                 for key in point_keys:
-                    setattr(student, key, points[key])
+                    points[key] = float(match[key].replace(',', '.')) if match[key] else None
 
-            else:
-                error(f'Student {name} with id {id} is not found in tribunal {tribunal.name}')
+                if tribunal.has_student(name, id):
+
+                    student = tribunal.get_student(name, id)
+
+                    for key in point_keys:
+                        setattr(student, key, points[key])
+
+                else:
+                    error(f'Student {name} with id {id} is not found in tribunal {tribunal.name}')
