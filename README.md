@@ -1,11 +1,12 @@
  # oposGV
 
-```
+## Characteristics
+
 Program: oposGV
-Version: 1.1
+Version: 1.2
 Author: Carles Mesado
-Date: 12/10/2022
-```
+Date: 29/08/2023
+Size: ~ 400 KiB
 
 ## Purpose
 
