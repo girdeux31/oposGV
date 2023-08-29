@@ -32,6 +32,10 @@ Install modules with pip:
 
 ```pip install BeautifulSoup4==4.11.1 pdftotext==2.1.6```
 
+or use ```requirements.txt``` file:
+
+```pip install -r requirements.txt```
+
 ## Usage
 
 ```usage: oposGV [-h] [-c CODE] [-p PATH] [-u URL] [-f]```
@@ -40,7 +44,7 @@ Install modules with pip:
 | --- | --- | --- |
 | -h, --help |  | Show this help message and exit |
 | -c, --code | None | Subject code, if None a table with subject codes is shown |
-| -p, --path | $PWD | Root path to download/read PDFs |
+| -p, --path | $CWD | Root path to download/read PDFs |
 | -u, --url | https://ceice.gva.es/auto/Actas | Root GVA url where subjects and codes are shown |
 | -f, --force |  | Force PDF downloads, by default PDFs are NOT downloaded if found locally |
 
