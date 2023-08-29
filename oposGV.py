@@ -1,8 +1,10 @@
-
-# Program: oposGV
-# Version: 1.2
-# Author: Carles Mesado
-# Date: 29/08/2023
+# Characteristics:
+#
+#  - Program: oposGV
+#  - Version: 1.2
+#  - Author: Carles Mesado
+#  - Date: 29/08/2023
+#  - Size: ~ 400 KiB
 
 # Visit GitHub page at https://github.com/girdeux31/oposGV for more info
 
@@ -35,7 +37,7 @@
 
 # Usage:
 #
-# usage: oposGV [-h] [-c CODE] [-p PATH] [-u URL] [-f]
+# usage: python oposGV [-h] [-c CODE] [-p PATH] [-u URL] [-f]
 #
 #  -h, --help            Show this help message and exit, default is False
 #  -c CODE, --code CODE  Subject code, if None a table with subject codes is shown, default is None

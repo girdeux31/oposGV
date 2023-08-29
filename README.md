@@ -39,7 +39,7 @@ or use ```requirements.txt``` file:
 
 ## Usage
 
-```usage: oposGV [-h] [-c CODE] [-p PATH] [-u URL] [-f]```
+```usage: python oposGV [-h] [-c CODE] [-p PATH] [-u URL] [-f]```
 
 | Flag | Default | Definition | 
 | --- | --- | --- |
