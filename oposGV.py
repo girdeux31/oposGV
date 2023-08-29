@@ -2,7 +2,7 @@
 # Program: oposGV
 # Version: 1.2
 # Author: Carles Mesado
-# Date: 28/08/2023
+# Date: 29/08/2023
 
 # Visit GitHub page at https://github.com/girdeux31/oposGV for more info
 
@@ -28,6 +28,10 @@
 # Install modules with pip
 #
 #  pip install BeautifulSoup4==4.11.1 pdftotext==2.1.6
+#
+# or use requirements.txt file:
+#
+#  pip install -r requirements.txt
 
 # Usage:
 #
@@ -49,7 +53,7 @@
 #
 # v1.0 06/10/2021   Only for exams for secondary teaching
 # v1.1 12/10/2022   Extended for exams for primary teaching
-# v1.2 28/08/2023   Make it independent of exam type (primary/secondary)
+# v1.2 29/08/2023   Make it independent of exam type (primary/secondary)
 
 # Main structure:
 #
